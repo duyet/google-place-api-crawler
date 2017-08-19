@@ -13,9 +13,10 @@ df['FullAddress'] = df.Ward + " " + df.District + " " + df.City
 def get_full_information(address = ""):
     print ('Request for address:', address)
     if os.path.isfile("text_search_cache/" + address):
-        with open("text_search_cache/" + address, "r") as f:
+        with open("text_search_cache/" + address, "rb") as f:
             print ("Done (from cached)!")
-            return json.load(f)
+            print (f.read().decode("utf-8"))
+            return f.read().decode("utf-8")
     else:
         try:
             query_result = google_places.text_search(query=address)
@@ -28,8 +29,4 @@ def get_full_information(address = ""):
             return None
 
 df['JSON'] = df.FullAddress.apply(get_full_information)
-df.to_csv("list_places_update.csv", index=False)
-
-print ("Retry =======================")
-df['JSON'] = df[df.JSON.isnull()].FullAddress.apply(get_full_information)
 df.to_csv("list_places_update.csv", index=False)
