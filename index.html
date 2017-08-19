@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Heatmap HCM</title>
+	<link rel="stylesheet" type="text/css" href="assets/styles.css" />
+	<script type="text/javascript" src="assets/data/university.js"></script>
+	<script type="text/javascript">
+		// duyet.net
+
+		var map, heatmap;
+
+		function initMap() {
+		  map = new google.maps.Map(document.getElementById('map'), {
+		    zoom: 14,
+		    center: {lat: 10.8691561, lng: 106.7956977},
+		  });
+
+		  heatmap = new google.maps.visualization.HeatmapLayer({
+		    data: getPoints(),
+		    map: map,
+		    radius: 20
+		  });
+		}
+
+		function toggleHeatmap() {
+		  heatmap.setMap(heatmap.getMap() ? null : map);
+		}
+
+		function changeGradient() {
+		  var gradient = [
+		    'rgba(0, 255, 255, 0)',
+		    'rgba(0, 255, 255, 1)',
+		    'rgba(0, 191, 255, 1)',
+		    'rgba(0, 127, 255, 1)',
+		    'rgba(0, 63, 255, 1)',
+		    'rgba(0, 0, 255, 1)',
+		    'rgba(0, 0, 223, 1)',
+		    'rgba(0, 0, 191, 1)',
+		    'rgba(0, 0, 159, 1)',
+		    'rgba(0, 0, 127, 1)',
+		    'rgba(63, 0, 91, 1)',
+		    'rgba(127, 0, 63, 1)',
+		    'rgba(191, 0, 31, 1)',
+		    'rgba(255, 0, 0, 1)'
+		  ]
+		  heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
+		}
+
+		function changeRadius() {
+		  heatmap.set('radius', heatmap.get('radius') ? null : 20);
+		}
+
+		function changeOpacity() {
+		  heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
+		}
+
+		// Heatmap data: 500 Points
+		function getPoints() {
+		  var d = university_places;
+		  
+		  return d.map(function(p) {
+		  	return new google.maps.LatLng(p.lat, p.lng)
+		  })
+		  
+		}
+	</script>
+</head>
+<body>
+
+<div id="floating-panel">
+  <button onclick="toggleHeatmap()">Population</button>
+  <button>Consumption</button>
+  <button onclick="changeRadius()">Socioeconomic</button>
+  <button onclick="changeRadius()">Education</button>
+
+</div>
+<div id="map"></div>
+<!-- Replace the value of the key parameter with your own API key. -->
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZ6dHIrv_aep5hXWLOnrNvdanTWEHy1EI&libraries=visualization&callback=initMap">
+</script>
+
+</body>
+</html>
