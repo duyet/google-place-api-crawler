@@ -31,3 +31,19 @@ html, body {
   top: 10px;
   z-index: 5;
 }
+
+button {
+    background: transparent;
+    border: 0;
+    color: #1d1d1d;
+    outline:none;
+}
+
+ {
+  border: 0
+}
+
+.active {
+  font-weight: 700;
+  color: #FF5722;
+}

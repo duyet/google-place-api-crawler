@@ -11,9 +11,15 @@ var Places = mongoose.model('Places', {
   name: String,
   id: String,
 });
-Places.find({"types": {$in: ["university"]}}).select("geometry.location").exec((err, docs) => {
-    list_points = docs.map(d => {
-        return d.geometry.location
-    })
-    console.log(list_points)
+
+"cafe, atm, hospital, store, shopping_mall, school, university".split(", ").map(type => {
+  Places.find({"types": {$in: [type]}}).select("geometry.location").exec((err, docs) => {
+      list_points = docs.map(d => {
+          return d.geometry.location
+      })
+      fs.writeFile('assets/data/'+ type +'.js', "var " + type + " = " + JSON.stringify(list_points), 'utf8', (e, d) => {
+        if (e) console.log(e)
+        else console.log("Saved!")
+      });
+  })
 })

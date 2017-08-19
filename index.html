@@ -3,7 +3,15 @@
 <head>
 	<title>Heatmap HCM</title>
 	<link rel="stylesheet" type="text/css" href="assets/styles.css" />
+
+	<script type="text/javascript" src="assets/data/atm.js"></script>
+	<script type="text/javascript" src="assets/data/cafe.js"></script>
+	<script type="text/javascript" src="assets/data/hospital.js"></script>
+	<script type="text/javascript" src="assets/data/shopping_mall.js"></script>
+	<script type="text/javascript" src="assets/data/store.js"></script>
 	<script type="text/javascript" src="assets/data/university.js"></script>
+	<script type="text/javascript" src="assets/data/school.js"></script>
+
 	<script type="text/javascript">
 		// duyet.net
 
@@ -11,8 +19,8 @@
 
 		function initMap() {
 		  map = new google.maps.Map(document.getElementById('map'), {
-		    zoom: 14,
-		    center: {lat: 10.8691561, lng: 106.7956977},
+		    zoom: 12,
+		    center: {lat: 10.8220414, lng: 106.7114594},
 		  });
 
 		  heatmap = new google.maps.visualization.HeatmapLayer({
@@ -55,24 +63,40 @@
 		}
 
 		// Heatmap data: 500 Points
-		function getPoints() {
-		  var d = university_places;
-		  
+		function getPoints(d) {
+		  var d = d || cafe;
+
 		  return d.map(function(p) {
 		  	return new google.maps.LatLng(p.lat, p.lng)
 		  })
-		  
 		}
+
+		function changeType(type) {
+			heatmap.setData(getPoints(window[type]));
+			console.log(type, '=============', window[type])
+
+			var c = document.getElementById("floating-panel").children;
+			for (var i in c) {
+				child = c[i];
+				child.className = '';
+				if (child.id == type) {
+					child.className = 'active';
+				}
+			}
+		}
+
 	</script>
 </head>
 <body>
 
 <div id="floating-panel">
-  <button onclick="toggleHeatmap()">Population</button>
-  <button>Consumption</button>
-  <button onclick="changeRadius()">Socioeconomic</button>
-  <button onclick="changeRadius()">Education</button>
-
+	<script type="text/javascript">
+		var data = "cafe, atm, hospital, store, shopping_mall, school, university"
+		data.split(", ").map(function(type) {
+			document.write("<button id="+ type +" onClick='changeType(\""+ type +"\")'>" + type + "</button>&nbsp;")
+		})
+		document.getElementById("cafe").className='active'
+	</script>
 </div>
 <div id="map"></div>
 <!-- Replace the value of the key parameter with your own API key. -->

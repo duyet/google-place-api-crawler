@@ -1,7 +1,22 @@
 const mongoose = require('mongoose');
 const fs = require('fs');
 
-mongoose.connect('mongodb://localhost/hcm');
+var option = {
+    server: {
+        socketOptions: {
+            keepAlive: 300000,
+            connectTimeoutMS: 30000
+        }
+    },
+    replset: {
+        socketOptions: {
+            keepAlive: 300000,
+            connectTimeoutMS: 30000
+        }
+    }
+};
+
+mongoose.connect('mongodb://localhost/hcm', option);
 var Places = mongoose.model('Places', {
   place_id: { type: String, unique: true },
   geometry: Object,
