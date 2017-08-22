@@ -12,7 +12,7 @@ var Places = mongoose.model('Places', {
   id: String,
 });
 
-"cafe, atm, hospital, store, shopping_mall, school, university".split(", ").map(type => {
+"cafe, atm, hospital, store, shopping_mall, school, university, ud_supermarket, ud_market, ud_cultural_house".split(", ").map(type => {
   Places.find({"types": {$in: [type]}}).select("geometry.location").exec((err, docs) => {
       list_points = docs.map(d => {
           return d.geometry.location
