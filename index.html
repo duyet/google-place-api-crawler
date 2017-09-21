@@ -11,6 +11,9 @@
 	<script type="text/javascript" src="assets/data/store.js"></script>
 	<script type="text/javascript" src="assets/data/university.js"></script>
 	<script type="text/javascript" src="assets/data/school.js"></script>
+	<script type="text/javascript" src="assets/data/ud_cultural_house.js"></script>
+	<script type="text/javascript" src="assets/data/ud_supermarket.js"></script>
+	<script type="text/javascript" src="assets/data/ud_market.js"></script>
 
 	<script type="text/javascript">
 		// duyet.net
@@ -18,24 +21,29 @@
 		var map, heatmap;
 
 		function initMap() {
-		  map = new google.maps.Map(document.getElementById('map'), {
-		    zoom: 12,
-		    center: {lat: 10.8220414, lng: 106.7114594},
-		  });
+			map = new google.maps.Map(document.getElementById('map'), {
+				zoom: 8,
+				center: {lat: 10.8220414, lng: 106.7114594},
+			});
 
-		  heatmap = new google.maps.visualization.HeatmapLayer({
-		    data: getPoints(),
-		    map: map,
-		    radius: 20
-		  });
+			heatmap = new google.maps.visualization.HeatmapLayer({
+				data: getPoints(),
+				map: map,
+				radius: 30,
+				opacity: 1
+			});
+
+			map.addListener('zoom_changed', function() {
+				
+			});
 		}
 
 		function toggleHeatmap() {
 		  heatmap.setMap(heatmap.getMap() ? null : map);
 		}
 
-		function changeGradient() {
-		  var gradient = [
+		function getGradient() {
+		  return [
 		    'rgba(0, 255, 255, 0)',
 		    'rgba(0, 255, 255, 1)',
 		    'rgba(0, 191, 255, 1)',
@@ -51,11 +59,22 @@
 		    'rgba(191, 0, 31, 1)',
 		    'rgba(255, 0, 0, 1)'
 		  ]
+		}
+
+		function updateGradient() {
+		  var gradient = getGradient();
+		  heatmap.set('gradient', gradient);
+		}
+		
+
+		function changeGradient() {
+		  var gradient = getGradient();
 		  heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
 		}
 
-		function changeRadius() {
-		  heatmap.set('radius', heatmap.get('radius') ? null : 20);
+		function changeRadius(n) {
+			var n = n || 20;
+		  heatmap.set('radius', heatmap.get('radius') ? null : n);
 		}
 
 		function changeOpacity() {
@@ -73,7 +92,6 @@
 
 		function changeType(type) {
 			heatmap.setData(getPoints(window[type]));
-			console.log(type, '=============', window[type])
 
 			var c = document.getElementById("floating-panel").children;
 			for (var i in c) {
@@ -91,7 +109,7 @@
 
 <div id="floating-panel">
 	<script type="text/javascript">
-		var data = "cafe, atm, hospital, store, shopping_mall, school, university"
+		var data = "cafe, atm, hospital, store, shopping_mall, school, university, ud_supermarket, ud_market, ud_cultural_house"
 		data.split(", ").map(function(type) {
 			document.write("<button id="+ type +" onClick='changeType(\""+ type +"\")'>" + type + "</button>&nbsp;")
 		})

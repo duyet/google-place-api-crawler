@@ -1,0 +1,23 @@
+{
+  "name": "google-place-api-crawler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "export.js",
+  "dependencies": {
+    "mongoose": "^4.11.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duyetdev/google-place-api-crawler.git"
+  },
+  "author": "Van-Duyet Le",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/duyetdev/google-place-api-crawler/issues"
+  },
+  "homepage": "https://github.com/duyetdev/google-place-api-crawler#readme"
+}
