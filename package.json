@@ -4,7 +4,7 @@
   "description": "",
   "main": "export.js",
   "dependencies": {
-    "mongoose": "^5.0.0"
+    "mongoose": "^7.0.0"
   },
   "devDependencies": {},
   "scripts": {
